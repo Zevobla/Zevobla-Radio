@@ -5,11 +5,14 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime, Time
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 
-DATABASE_URL = "postgresql://admin:root@localhost:5432/main_db"
+from config import Config
 
+
+conf = Config().conf
+DATABASE_URL = f"postgresql://admin:root@{conf["base_url"]}:{conf["port"]}/main_db"
 engine = create_engine(DATABASE_URL)
-
 Base = declarative_base()
+
 
 class Track(Base):
     """This class represent each track that which be played"""
