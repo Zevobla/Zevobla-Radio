@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from config.config import Config
 
 
-conf = Config().conf
+conf = Config().conf["db"]
 DATABASE_URL = f"postgresql://admin:root@{conf["base_url"]}:{conf["port"]}/main_db"
 engine = create_engine(DATABASE_URL)
 Base = declarative_base()
