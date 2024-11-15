@@ -1,14 +1,11 @@
 """This module helps handling aac stream."""
 from fastapi import FastAPI
 import uvicorn
-import spotipy
 
 import db
 
 app = FastAPI()
 database = db.get_db()
-sp = spotipy.Spotify(auth_manager=spotipy.SpotifyClientCredentials(client_id="YOUR_APP_CLIENT_ID",
-                                                           client_secret="YOUR_APP_CLIENT_SECRET"))
 
 
 @app.get("/current")
