@@ -1,0 +1,31 @@
+"""This module helps handling aac stream."""
+from fastapi import FastAPI
+import uvicorn
+import spotipy
+
+import db
+
+app = FastAPI()
+database = db.get_db()
+sp = spotipy.Spotify(auth_manager=spotipy.SpotifyClientCredentials(client_id="YOUR_APP_CLIENT_ID",
+                                                           client_secret="YOUR_APP_CLIENT_SECRET"))
+
+
+@app.get("/current")
+def get_current_track():
+    """get current track from db"""
+
+    return {"response": db.get_last_track(database)}
+
+
+@app.post("/track/{track_id}")
+def add_track(track_id: str):
+    """add track to the db"""
+
+    starting_from, length = db.get_last_track(database)
+
+    return {"response": db.add_track(database, track_id, starting_from, length)}
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8081, reload=True)

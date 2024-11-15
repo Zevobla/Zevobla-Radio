@@ -1,0 +1,6 @@
+__pycache__/
+venv/
+.cache
+credentials.json
+.DS_Store
+config.toml
