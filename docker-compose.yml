@@ -17,20 +17,16 @@ services:
     build: ./spotify
     ports:
       - "8000:8000"
-    # environment:
-    #   SPOTIPY_CLIENT_ID: your_spotify_client_id  # Add your Spotify credentials
-    #   SPOTIPY_CLIENT_SECRET: your_spotify_client_secret
+    environment:
+      SPOTIPY_CLIENT_ID: your_spotify_client_id
+      SPOTIPY_CLIENT_SECRET: your_spotify_client_secret
     depends_on:
       - postgres
-    volumes:
-      - ./config:/app/config
   queue:
     build: ./queue
     ports:
       - "8081:8081"
     depends_on:
       - postgres
-    volumes:
-      - ./config:/app/config 
 volumes:
   postgres-data:
