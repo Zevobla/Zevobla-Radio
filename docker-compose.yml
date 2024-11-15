@@ -22,11 +22,15 @@ services:
     #   SPOTIPY_CLIENT_SECRET: your_spotify_client_secret
     depends_on:
       - postgres
+    volumes:
+      - ./config:/app/config
   queue:
     build: ./queue
     ports:
       - "8081:8081"
     depends_on:
       - postgres
+    volumes:
+      - ./config:/app/config 
 volumes:
   postgres-data:

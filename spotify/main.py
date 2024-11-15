@@ -1,6 +1,6 @@
 """This module helps handling spotify streaming data."""
 from stream_spotify import StreamFromSpotify
-from config import Config
+from config.config import Config
 
 import uvicorn
 from fastapi import FastAPI
