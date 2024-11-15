@@ -1,16 +1,16 @@
 """This module helps handling spotify streaming data."""
-from stream_spotify import StreamFromSpotify
-from config.config import Config
-
 import uvicorn
 from fastapi import FastAPI
 
+from stream_spotify import StreamFromSpotify
+from config.config import Config
 
-conf = Config()
+
+conf = Config().conf["spotify"]
 app = FastAPI()
 spotify = StreamFromSpotify(
-    conf.conf["client_id"],
-    conf.conf["client_secret"]
+    conf["client_id"],
+    conf["client_secret"]
 )
 
 
