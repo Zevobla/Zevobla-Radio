@@ -5,7 +5,7 @@ from fastapi import FastAPI
 import uvicorn
 
 import stream
-import config
+from config.config import Config
 
 
 app = FastAPI()
@@ -16,7 +16,7 @@ streams_sessions: list[Popen] = []
 def stream_to():
     """Starts streaming"""
 
-    c = config.Config().conf["out"]
+    c = Config().conf["out"]
 
     for service in c.keys():
         streams_sessions.append(
