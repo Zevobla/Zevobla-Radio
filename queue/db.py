@@ -1,15 +1,14 @@
 """This module represent Track model and Interface for db"""
 import datetime
+import os
 
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Time
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 
-from config.config import Config
 
-
-conf = Config().conf["db"]
-DATABASE_URL = f"postgresql://admin:root@{conf["base_url"]}:{conf["port"]}/main_db"
+c = os.environ
+DATABASE_URL = f"postgresql://{c["POSTGRES_USER"]}:{c["POSTGRES_PASSWORD"]}@{c["POSTGRES_HOST"]}:{c["POSTGRES_PORT"]}/{c["POSTGRES_DB"]}"
 engine = create_engine(DATABASE_URL)
 Base = declarative_base()
 

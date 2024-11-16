@@ -4,6 +4,7 @@ import uvicorn
 
 import db
 
+
 app = FastAPI()
 database = db.get_db()
 

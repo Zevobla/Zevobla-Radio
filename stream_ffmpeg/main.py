@@ -1,31 +1,47 @@
 """This module helps handling aac stream."""
 from subprocess import Popen
+import os
 
 from fastapi import FastAPI
 import uvicorn
 
 import stream
-from config.config import Config
+
+
+def handle_config() -> dict[str, dict[str, str]]:
+    """This functions helps unpack config"""
+
+    conf = {}
+
+    for var in os.environ:
+        if var[:3] == "ROUT":
+            g = var.split("_")
+            conf[g[1]][g[2]] = g[3]
+
+    return conf
 
 
 app = FastAPI()
 streams_sessions: list[Popen] = []
+config = handle_config()
 
 
 @app.get("/stream")
 def stream_to():
     """Starts streaming"""
 
-    c = Config().conf["out"]
-
-    for service in c.keys():
-        streams_sessions.append(
-            stream.Stream(
-                codec=c[service]["codec"],
-                otype=c[service]["type"],
-                path=c[service]["path"]
-            )
+    for param in config.values():
+        process = stream.Stream(
+            codec=param["codec"],
+            otype=param["type"],
+            path=param["path"]
         )
+
+        streams_sessions.append(
+            process
+        )
+
+        process.start()
 
     return True
 
