@@ -6,8 +6,10 @@ services:
     hostname: localhost
     ports:
       - "5432:5432"
-    env_file:
-      - db.env
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: main_db
     volumes:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -19,6 +21,7 @@ services:
       SPOTIPY_CLIENT_ID: your_spotify_client_id
       SPOTIPY_CLIENT_SECRET: your_spotify_client_secret
       SERVICE_PORT: "8081"
+      DB_URL: postgresql://admin:root@queue-pg:5432/main_db
     depends_on:
       - postgres
   queue:
