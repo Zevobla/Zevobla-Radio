@@ -57,4 +57,4 @@ def stream_stop():
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="queue", port=8081, reload=True)
+    uvicorn.run("main:app", host="stream_ffmpeg", port=8081, reload=True)
