@@ -10,6 +10,8 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: root
       POSTGRES_DB: main_db
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: "5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -25,8 +27,26 @@ services:
   queue:
     build: ./queue
     ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+  stream_ffmpeg:
+    build: ./stream_ffmpeg
+    ports:
       - "8081:8081"
     depends_on:
       - postgres
+    environment:
+      ROUT_TELEGRAM_TYPE: rtmps
+      ROUT_TELEGRAM_CODEC: aac
+      ROUT_TELEGRAM_PATH: rtmps://dc4-1.rtmp.t.me/s/id:key
+
+      ROUT_HLS_TYPE: hls
+      ROUT_HLS_CODEC: aac
+      ROUT_HLS_PATH: /var/www/html/radio
+
+      ROUT_AAC_TYPE: aac
+      ROUT_AAC_CODEC: aac
+      ROUT_AAC_PATH: /var/www/html/radio
 volumes:
   postgres-data:

@@ -1,5 +1,6 @@
 """This module helps stream to telegram live stream via rtmp protocol with helps FFMPEG"""
 from subprocess import Popen
+import requests
 
 
 class Stream:
@@ -11,8 +12,11 @@ class Stream:
         else:
             self.ffmpeg_state: Popen = Popen(f'ffmpeg -f {input_codec} -acodec {input_codec_provider} -ac 2 -i pipe:0 -f {otype} -acodec {codec} -ac 2 -b:a 320k -af "atempo=1" -buffer_size 1000k -y {path}')
 
-    def start(self, stream):
+    def start(self):
         """Streams to Telegram's rtmps server through ffmpeg"""
+
+        track_id = requests.get("0.0.0.0:8081/current", timeout=50).text
+        stream = requests.get(f"0.0.0.0:8081/track/{track_id}", timeout=50).content
 
         try:
             if stream.input_stream.stream().pos() >= stream.input_stream.stream().size():
