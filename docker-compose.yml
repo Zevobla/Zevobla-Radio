@@ -15,8 +15,6 @@ services:
     build: ./spotify
     ports:
       - "8000:8000"
-    env_file:
-      - db.env
     environment:
       SPOTIPY_CLIENT_ID: your_spotify_client_id
       SPOTIPY_CLIENT_SECRET: your_spotify_client_secret
@@ -27,6 +25,8 @@ services:
     build: ./queue
     ports:
       - "8081:8081"
+    env_file:
+      - db.env
     environment:
       SERVICE_PORT: "8081"
     depends_on:
