@@ -1,5 +1,6 @@
 """This module helps handling spotify streaming data."""
 import os
+import time
 
 import uvicorn
 from fastapi import FastAPI
@@ -8,10 +9,17 @@ from stream_spotify import StreamFromSpotify
 
 
 app = FastAPI()
-spotify = StreamFromSpotify(
-    os.environ["SPOTIPY_CLIENT_ID"],
-    os.environ["SPOTIPY_CLIENT_SECRET"]
-)
+try:
+    spotify = StreamFromSpotify(
+        os.environ["SPOTIPY_CLIENT_ID"],
+        os.environ["SPOTIPY_CLIENT_SECRET"]
+    )
+except ConnectionRefusedError:
+    time.sleep(5)
+    spotify = StreamFromSpotify(
+        os.environ["SPOTIPY_CLIENT_ID"],
+        os.environ["SPOTIPY_CLIENT_SECRET"]
+    )
 
 
 @app.get("/playlist/{playlist_id}")
