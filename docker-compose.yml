@@ -4,8 +4,6 @@ services:
     container_name: queue-pg
     image: postgres
     hostname: localhost
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: root
@@ -15,12 +13,9 @@ services:
     restart: unless-stopped
   spotify:
     build: ./spotify
-    ports:
-      - "8000:8000"
     environment:
       SPOTIPY_CLIENT_ID: your_spotify_client_id
       SPOTIPY_CLIENT_SECRET: your_spotify_client_secret
-      SERVICE_PORT: "8000"
     depends_on:
       - postgres
   queue:
@@ -28,18 +23,14 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SERVICE_PORT: "8081"
       DB_URL: postgresql://admin:root@queue-pg:5432/main_db
     depends_on:
       - postgres
   stream_ffmpeg:
     build: ./stream_ffmpeg
-    ports:
-      - "8082:8082"
     depends_on:
       - postgres
     environment:
-      SERVICE_PORT: "8082"
       ROUT_TELEGRAM_TYPE: rtmps
       ROUT_TELEGRAM_CODEC: aac
       ROUT_TELEGRAM_PATH: rtmps://dc4-1.rtmp.t.me/s/id:key

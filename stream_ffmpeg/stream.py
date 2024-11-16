@@ -15,8 +15,8 @@ class Stream:
     def start(self):
         """Streams to Telegram's rtmps server through ffmpeg"""
 
-        track_id = requests.get("0.0.0.0:8081/current", timeout=50).text
-        stream = requests.get(f"0.0.0.0:8081/track/{track_id}", timeout=50).content
+        track_id = requests.get("queue:8000/current", timeout=50).text
+        stream = requests.get(f"spotify:8000/track/{track_id}", timeout=50).content
 
         try:
             if stream.input_stream.stream().pos() >= stream.input_stream.stream().size():
