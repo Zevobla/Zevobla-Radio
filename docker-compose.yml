@@ -6,12 +6,8 @@ services:
     hostname: localhost
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: main_db
-      POSTGRES_HOST: localhost
-      POSTGRES_PORT: "5432"
+    env_file:
+      - db.env
     volumes:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -19,6 +15,8 @@ services:
     build: ./spotify
     ports:
       - "8000:8000"
+    env_file:
+      - db.env
     environment:
       SPOTIPY_CLIENT_ID: your_spotify_client_id
       SPOTIPY_CLIENT_SECRET: your_spotify_client_secret
