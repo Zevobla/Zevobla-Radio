@@ -8,8 +8,7 @@ from sqlalchemy.orm import sessionmaker, Session
 
 
 c = os.environ
-DATABASE_URL = f"postgresql://{c["POSTGRES_USER"]}:{c["POSTGRES_PASSWORD"]}@{c["POSTGRES_HOST"]}:{c["POSTGRES_PORT"]}/{c["POSTGRES_DB"]}"
-engine = create_engine(DATABASE_URL)
+engine = create_engine(c["DB_URL"])
 Base = declarative_base()
 
 
