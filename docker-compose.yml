@@ -22,21 +22,25 @@ services:
     environment:
       SPOTIPY_CLIENT_ID: your_spotify_client_id
       SPOTIPY_CLIENT_SECRET: your_spotify_client_secret
+      SERVICE_PORT: "8081"
     depends_on:
       - postgres
   queue:
     build: ./queue
     ports:
-      - "8080:8080"
+      - "8081:8081"
+    environment:
+      SERVICE_PORT: "8081"
     depends_on:
       - postgres
   stream_ffmpeg:
     build: ./stream_ffmpeg
     ports:
-      - "8081:8081"
+      - "8082:8082"
     depends_on:
       - postgres
     environment:
+      SERVICE_PORT: "8082"
       ROUT_TELEGRAM_TYPE: rtmps
       ROUT_TELEGRAM_CODEC: aac
       ROUT_TELEGRAM_PATH: rtmps://dc4-1.rtmp.t.me/s/id:key
