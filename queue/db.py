@@ -8,8 +8,9 @@ from sqlalchemy.orm import sessionmaker, Session
 
 
 c = os.environ
-engine = create_engine(c["DB_URL"])
 Base = declarative_base()
+engine = create_engine(c["DB_URL"], echo=True)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 class Track(Base):
@@ -21,17 +22,11 @@ class Track(Base):
     starting_from = Column(DateTime)
     length = Column(Time)
 
-Base.metadata.create_all(engine)
+def init_db():
+    """Initialize the database and create tables."""
+    Base.metadata.create_all(bind=engine)
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-def get_db():
-    db = SessionLocal()
-
-    try:
-        yield db
-    finally:
-        db.close()
 
 def get_last_track(db: Session):
     now = datetime.datetime.now()
