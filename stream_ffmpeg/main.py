@@ -51,7 +51,7 @@ def stream_stop():
     """Starts streaming"""
 
     for service in streams_sessions:
-        service.kill()
+        service.stop()
 
     return True
 

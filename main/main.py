@@ -13,9 +13,8 @@ class CLI(cmd.Cmd):
         """Add smth to queue. add spotify:track:0UHB9METy4VCXNgkcGqHqS"""
 
         if "spotify" in arg:
-            requests.post(f"127.0.0.1:8081/{arg}", timeout=50)
+            requests.post(f"http://radio.persifon.com/{arg}", timeout=50)
             print("Added")
-            return True
         else:
             print("Syntax: add spotify:track:0UHB9METy4VCXNgkcGqHqS")
 
