@@ -26,24 +26,10 @@ def init_db():
     """Initialize the database and create tables."""
     Base.metadata.create_all(bind=engine)
 
-
-
-def get_last_track(db: Session):
-    now = datetime.datetime.now()
-
-    try:
-        track = (db.query(Track)
-                 .filter(
-                     (Track.starting_from <= now) &
-                     (Track.starting_from + datetime.timedelta(hours=Track.length.hour, minutes=Track.length.minute, seconds=Track.length.second) >= now)
-                 )
-                 .order_by(Track.starting_from.desc())
-                 .first()
-                 )
-        return track
-    except Exception as e:
-        print(f"Error getting last track: {e}")
-        return None
+def get_last_track_id(session: Session):
+    """Retrieve the id of the last track in the database."""
+    last_track = session.query(Track).order_by(Track.id.desc()).first()
+    return last_track.track_id if last_track else None
     
 def add_track(db: Session, track_id: str, starting_from: datetime.datetime, length: datetime.time):
     """
