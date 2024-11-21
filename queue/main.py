@@ -27,8 +27,8 @@ def add_track(track_id: str):
         dt = datetime.datetime.now()
 
         if last_track != None:
-            starting_from = last_track
-            resp = db.add_track(session, track_id, starting_from, datetime.time(minute=5))
+            starting_from, length = last_track
+            resp = db.add_track(session, track_id, starting_from, length)
         else:
             resp = db.add_track(session, track_id, dt + datetime.timedelta(seconds=30), datetime.time(minute=5))
 

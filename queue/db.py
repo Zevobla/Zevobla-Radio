@@ -29,7 +29,7 @@ def init_db():
 def get_last_track(session: Session):
     """Retrieve the id of the last track in the database."""
     last_track = session.query(Track).order_by(Track.id.desc()).first()
-    return last_track.track_id if last_track else None
+    return (last_track.starting_from, last_track.length) if last_track else None
     
 def add_track(db: Session, track_id: str, starting_from: datetime.datetime, length: datetime.time):
     """
