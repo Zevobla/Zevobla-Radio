@@ -30,7 +30,7 @@ def add_track(track_id: str):
             starting_from, length = last_track
             resp = db.add_track(session, track_id, starting_from, length)
         else:
-            resp = db.add_track(session, track_id, dt.time(), dt + datetime.timedelta(seconds=30))
+            resp = db.add_track(session, track_id, dt + datetime.timedelta(seconds=30), datetime.time(minute=5))
 
     return {"response": resp}
 

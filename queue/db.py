@@ -26,7 +26,7 @@ def init_db():
     """Initialize the database and create tables."""
     Base.metadata.create_all(bind=engine)
 
-def get_last_track_id(session: Session):
+def get_last_track(session: Session):
     """Retrieve the id of the last track in the database."""
     last_track = session.query(Track).order_by(Track.id.desc()).first()
     return last_track.track_id if last_track else None
