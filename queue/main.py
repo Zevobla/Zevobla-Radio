@@ -36,4 +36,4 @@ def add_track(track_id: str):
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="queue", port=8081, reload=True)
+    uvicorn.run("main:app", host="queue", port=7002, reload=True)

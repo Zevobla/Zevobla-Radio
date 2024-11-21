@@ -37,4 +37,4 @@ def get_track(track_id: str):
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="spotify", port=8000, reload=True)
+    uvicorn.run("main:app", host="spotify", port=7003, reload=True)
