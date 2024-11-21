@@ -10,6 +10,14 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
+  main:
+    build: ./main
+    ports:
+      - "8082:8082"
+    environment:
+      DB_URL: postgresql://admin:root@queue-pg:5432/main_db
+    depends_on:
+      - postgres
   spotify:
     build: ./spotify
     environment:
@@ -28,7 +36,7 @@ services:
   stream_ffmpeg:
     build: ./stream_ffmpeg
     depends_on:
-      - postgres
+      - queue
     environment:
       ROUT_TELEGRAM_TYPE: rtmps
       ROUT_TELEGRAM_CODEC: aac

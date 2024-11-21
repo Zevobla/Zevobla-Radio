@@ -1,40 +1,26 @@
-import uvicorn
-from fastapi import FastAPI
+"""This module helps handling aac stream."""
+import datetime
 
+from fastapi import FastAPI
+import uvicorn
 import requests
 
-import cmd
 
-class CLI(cmd.Cmd):
-    intro = "Welcome to my internet radio streaming app. Type help or ? to list commands.\n"
-    prompt = "(Radio) $ "
-
-    def do_add(self, arg):
-        """Add smth to queue. add spotify:track:0UHB9METy4VCXNgkcGqHqS"""
-
-        if "spotify" in arg:
-            requests.post(f"http://radio.persifon.com/track/{arg}", timeout=50)
-            print("Added")
-        else:
-            print("Syntax: add spotify:track:0UHB9METy4VCXNgkcGqHqS")
-
-    def do_login(self, arg):
-        """Do login to the radio server"""
+app = FastAPI()
 
 
-    def do_exit(self, arg):
-        """Exit the shell: exit"""
+@app.get("/start")
+def start_streaming():
+    """get current track from db"""
 
-        print("Exiting...")
+    r = requests.get("stream_ffmpeg:8081/stream")
 
-        return True
+@app.get("/stop")
+def stop_streaming():
+    """get current track from db"""
 
-    def do_EOF(self, arg):
-        """Exit the shell with Ctrl+D:"""
+    r = requests.get("stream_ffmpeg:8081/stop")
 
-        print("Exiting...")
-
-        return True
 
 if __name__ == "__main__":
-    CLI().cmdloop()
+    uvicorn.run("main:app", host="main", port=8082, reload=True)
