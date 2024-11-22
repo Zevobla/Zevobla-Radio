@@ -1,6 +1,8 @@
-import requests
+"""Client for controlling ZeRadio."""
 
 import cmd
+
+import requests
 
 class CLI(cmd.Cmd):
     intro = "Welcome to my internet radio streaming app. Type help or ? to list commands.\n"
@@ -10,12 +12,12 @@ class CLI(cmd.Cmd):
         """Add smth to queue. add spotify:track:0UHB9METy4VCXNgkcGqHqS"""
 
         if "spotify" in arg:
-            requests.post(f"http://radio.persifon.com/track/{arg}", timeout=50)
+            requests.post(f"http://radio.persifon.com:7002/track/{arg}", timeout=50)
             print("Added")
         else:
             print("Syntax: add spotify:track:0UHB9METy4VCXNgkcGqHqS")
-    
-    def do_start(self, arg):
+
+    def do_start(self):
         """Add smth to queue. add spotify:track:0UHB9METy4VCXNgkcGqHqS"""
 
         requests.get("http://radio.persifon.com:8082/start", timeout=50)

@@ -1,6 +1,4 @@
 """This module helps handling aac stream."""
-import datetime
-
 from fastapi import FastAPI
 import uvicorn
 import requests
@@ -13,13 +11,13 @@ app = FastAPI()
 def start_streaming():
     """get current track from db"""
 
-    r = requests.get("stream_ffmpeg:7001/stream")
+    requests.get("stream_ffmpeg:7001/stream", timeout=30)
 
 @app.get("/stop")
 def stop_streaming():
     """get current track from db"""
 
-    r = requests.get("stream_ffmpeg:7001/stop")
+    requests.get("stream_ffmpeg:7001/stop", timeout=30)
 
 
 if __name__ == "__main__":
