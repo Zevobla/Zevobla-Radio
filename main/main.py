@@ -11,13 +11,13 @@ app = FastAPI()
 def start_streaming():
     """get current track from db"""
 
-    requests.get("stream_ffmpeg:7001/stream", timeout=30)
+    requests.get("http://stream_ffmpeg:7001/stream", timeout=30)
 
 @app.get("/stop")
 def stop_streaming():
     """get current track from db"""
 
-    requests.get("stream_ffmpeg:7001/stop", timeout=30)
+    requests.get("http://stream_ffmpeg:7001/stop", timeout=30)
 
 
 if __name__ == "__main__":

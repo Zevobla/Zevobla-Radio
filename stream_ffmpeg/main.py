@@ -1,6 +1,7 @@
 """This module helps handling aac stream."""
 from subprocess import Popen
 import os
+import logging
 
 from fastapi import FastAPI
 import uvicorn
@@ -31,11 +32,13 @@ def stream_to():
     """Starts streaming"""
 
     for param in config.values():
-        process = stream.Stream(
+        process: stream.Stream = stream.Stream(
             codec=param["codec"],
             otype=param["type"],
             path=param["path"]
         )
+
+        logging.info("Successfully started Stream with %s %s %s", process.codec, process.otype, process.path)
 
         streams_sessions.append(
             process

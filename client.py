@@ -17,11 +17,17 @@ class CLI(cmd.Cmd):
         else:
             print("Syntax: add spotify:track:0UHB9METy4VCXNgkcGqHqS")
 
-    def do_start(self):
+    def do_start(self, arg):
         """Add smth to queue. add spotify:track:0UHB9METy4VCXNgkcGqHqS"""
 
         requests.get("http://radio.persifon.com:8082/start", timeout=50)
         print("STrated")
+    
+    def do_get_queue(self, arg):
+        """Add smth to queue. add spotify:track:0UHB9METy4VCXNgkcGqHqS"""
+
+        r = requests.get("http://radio.persifon.com:7002/current", timeout=50)
+        print("STrated", r.text)
 
     def do_login(self, arg):
         """Do login to the radio server"""
